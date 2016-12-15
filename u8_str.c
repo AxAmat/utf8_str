@@ -25,9 +25,8 @@ int u8_char_len(char first_byte) {
 */
 int u8_str_len(char * str) {
     int i = 0, count = 0;
-    int str_l = str_len(str);
-    for (; i < str_l; i += u8_char_len(str[i]), count++);
-    return count - 1;
+    for (; str[i] != '\0'; i += u8_char_len(str[i]), count++);
+    return count;
 }
 
 /*
@@ -35,13 +34,16 @@ int u8_str_len(char * str) {
 */
 char* u8_str_index(char * str, int index) {
     int i, j, count, start_index, stop_index;
-    int str_l = str_len(str);
     static char res[5];
-    for (i = 0, count = 0; i < str_l; i += u8_char_len(str[i]), count++) {
+    for (i = 0, count = 0; count <= index; i += u8_char_len(str[i]), count++) {
         if (count == index) {
             start_index = i;
             stop_index = i + u8_char_len(str[i]);
             break;
+        } else if (str[i] == '\0') {
+            printf("%s %d %s",
+                    "Выход за пределы диапазона:", index, "отсутствует\n");
+            exit(EXIT_FAILURE);
         }
     }
     for (j = start_index; j < stop_index; j++) {
