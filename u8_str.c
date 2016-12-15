@@ -1,7 +1,17 @@
+
+/*
+    Функция определяет длину строки в байтах
+*/
+int str_len(char * str) {
+    int i = 0, res = 0;
+    for (; str[i] != '\0'; i++, res++);
+    return res;
+}
+
 /*
     Функция определяет длину символа UTF-8
 */
-size_t u8_char_len(char first_byte) {
+int u8_char_len(char first_byte) {
     unsigned short int bytes = 0;
     if ((first_byte & 0xC0) == 0xC0) {
         if ((first_byte & 0xF0) == 0xF0) bytes = 4;
@@ -14,7 +24,7 @@ size_t u8_char_len(char first_byte) {
 /*
     Функция определяет длину строки UTF-8
 */
-size_t u8_str_len(char * str, int str_len) {
+int u8_str_len(char * str, int str_len) {
     int i, count = 0;
     for (i = 0; i < str_len; i += u8_char_len(str[i]), count++);
     return count - 1;
@@ -25,7 +35,7 @@ size_t u8_str_len(char * str, int str_len) {
 */
 char* u8_str_index(char * str, int str_len, int index) {
     int i, j, count, start_index, stop_index;
-    char res[6];
+    char res[8];
     for (i = 0, count = 0; i < str_len; i += u8_char_len(str[i]), count++) {
         if (count == index) {
             start_index = i;
