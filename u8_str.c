@@ -36,7 +36,7 @@ int u8_str_len(char * str) {
 char* u8_str_index(char * str, int index) {
     int i, j, count, start_index, stop_index;
     int str_l = str_len(str);
-    char res[8];
+    static char res[5];
     for (i = 0, count = 0; i < str_l; i += u8_char_len(str[i]), count++) {
         if (count == index) {
             start_index = i;
@@ -47,6 +47,6 @@ char* u8_str_index(char * str, int index) {
     for (j = start_index; j < stop_index; j++) {
         res[j - start_index] = str[j];
     }
-    res[stop_index] = '\0';
+    res[stop_index - start_index] = '\0';
     return res;
 }
