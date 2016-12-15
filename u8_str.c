@@ -2,11 +2,13 @@
     Функция определяет длину символа UTF-8
 */
 size_t u8_char_len(char first_byte) {
+    unsigned short int bytes = 0;
     if ((first_byte & 0xC0) == 0xC0) {
-        if ((first_byte & 0xF0) == 0xF0) return 4;
-        else if ((first_byte & 0xE0) == 0xE0) return 3;
-        else return 2;
-    } else return 1;
+        if ((first_byte & 0xF0) == 0xF0) bytes = 4;
+        else if ((first_byte & 0xE0) == 0xE0) bytes = 3;
+        else bytes = 2;
+    } else bytes = 1;
+    return bytes;
 }
 
 /*
