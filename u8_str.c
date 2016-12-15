@@ -1,4 +1,3 @@
-
 /*
     Функция определяет длину строки в байтах
 */
@@ -24,19 +23,21 @@ int u8_char_len(char first_byte) {
 /*
     Функция определяет длину строки UTF-8
 */
-int u8_str_len(char * str, int str_len) {
-    int i, count = 0;
-    for (i = 0; i < str_len; i += u8_char_len(str[i]), count++);
+int u8_str_len(char * str) {
+    int i = 0, count = 0;
+    int str_l = str_len(str);
+    for (; i < str_l; i += u8_char_len(str[i]), count++);
     return count - 1;
 }
 
 /*
     Функция возвращает символ строки UTF-8
 */
-char* u8_str_index(char * str, int str_len, int index) {
+char* u8_str_index(char * str, int index) {
     int i, j, count, start_index, stop_index;
+    int str_l = str_len(str);
     char res[8];
-    for (i = 0, count = 0; i < str_len; i += u8_char_len(str[i]), count++) {
+    for (i = 0, count = 0; i < str_l; i += u8_char_len(str[i]), count++) {
         if (count == index) {
             start_index = i;
             stop_index = i + u8_char_len(str[i]);
